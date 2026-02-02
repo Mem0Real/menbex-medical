@@ -59,6 +59,8 @@ export const ModelName = {
   Prescription: 'Prescription',
   LabResult: 'LabResult',
   Resource: 'Resource',
+  Visit: 'Visit',
+  Medication: 'Medication',
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken'
@@ -99,7 +101,9 @@ export const PatientScalarFieldEnum = {
   phone: 'phone',
   dateOfBirth: 'dateOfBirth',
   address: 'address',
-  medicalNotes: 'medicalNotes'
+  medicalNotes: 'medicalNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PatientScalarFieldEnum = (typeof PatientScalarFieldEnum)[keyof typeof PatientScalarFieldEnum]
@@ -124,7 +128,8 @@ export const AppointmentScalarFieldEnum = {
   scheduledAt: 'scheduledAt',
   status: 'status',
   consultation: 'consultation',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
@@ -159,6 +164,9 @@ export const LabResultScalarFieldEnum = {
   patientId: 'patientId',
   filePath: 'filePath',
   description: 'description',
+  testName: 'testName',
+  result: 'result',
+  fileUrl: 'fileUrl',
   createdAt: 'createdAt'
 } as const
 
@@ -174,6 +182,29 @@ export const ResourceScalarFieldEnum = {
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+
+
+export const VisitScalarFieldEnum = {
+  id: 'id',
+  patientId: 'patientId',
+  doctorId: 'doctorId',
+  notes: 'notes',
+  consultation: 'consultation',
+  createdAt: 'createdAt'
+} as const
+
+export type VisitScalarFieldEnum = (typeof VisitScalarFieldEnum)[keyof typeof VisitScalarFieldEnum]
+
+
+export const MedicationScalarFieldEnum = {
+  id: 'id',
+  patientId: 'patientId',
+  name: 'name',
+  reminder: 'reminder',
+  notes: 'notes'
+} as const
+
+export type MedicationScalarFieldEnum = (typeof MedicationScalarFieldEnum)[keyof typeof MedicationScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {

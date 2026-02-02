@@ -40,96 +40,126 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  patient      Patient?
-  doctor       Doctor?
-  account      Account[]
-  session      Session[]
+  patient Patient?
+  doctor  Doctor?
+  account Account[]
+  session Session[]
 }
 
 model Patient {
-  id           String   @id @default(uuid())
-  userId       String   @unique
+  id           String    @id @default(uuid())
+  userId       String    @unique
   fullName     String
   phone        String?
   dateOfBirth  DateTime?
   address      String?
   medicalNotes String?
 
-  user         User     @relation(fields: [userId], references: [id])
-  appointments Appointment[]
+  user          User           @relation(fields: [userId], references: [id])
+  appointments  Appointment[]
   prescriptions Prescription[]
-  labResults   LabResult[]
+  labResults    LabResult[]
+  visits        Visit[]
+  medications   Medication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Doctor {
-  id           String   @id @default(uuid())
-  userId       String   @unique
+  id           String @id @default(uuid())
+  userId       String @unique
   fullName     String
   specialty    String
   licenseNo    String
-  availability Json     // stored locally as JSON
+  availability Json // stored locally as JSON
 
-  user         User     @relation(fields: [userId], references: [id])
-  appointments Appointment[]
+  user          User           @relation(fields: [userId], references: [id])
+  appointments  Appointment[]
   prescriptions Prescription[]
+  visits        Visit[]
 }
 
 model Appointment {
-  id           String             @id @default(uuid())
+  id           String            @id @default(uuid())
   patientId    String
   doctorId     String
   scheduledAt  DateTime
   status       AppointmentStatus
   consultation ConsultationType
-  createdAt    DateTime @default(now())
 
-  patient      Patient @relation(fields: [patientId], references: [id])
-  doctor       Doctor  @relation(fields: [doctorId], references: [id])
+  patient         Patient       @relation(fields: [patientId], references: [id])
+  doctor          Doctor        @relation(fields: [doctorId], references: [id])
   consultationLog Consultation?
 
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Consultation {
-  id            String   @id @default(uuid())
-  appointmentId String   @unique
+  id            String  @id @default(uuid())
+  appointmentId String  @unique
   summary       String?
   followUpNotes String?
 
-  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
 }
 
 model Prescription {
-  id           String   @id @default(uuid())
+  id           String             @id @default(uuid())
   patientId    String
   doctorId     String
   medication   String
   dosage       String
   instructions String
   status       PrescriptionStatus
-  createdAt    DateTime @default(now())
+  createdAt    DateTime           @default(now())
 
-  patient      Patient @relation(fields: [patientId], references: [id])
-  doctor       Doctor  @relation(fields: [doctorId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
+  doctor  Doctor  @relation(fields: [doctorId], references: [id])
 }
 
 model LabResult {
   id          String   @id @default(uuid())
   patientId   String
-  filePath    String   // LOCAL FILE PATH
+  filePath    String // LOCAL FILE PATH
   description String?
+  testName    String
+  result      String
+  fileUrl     String? // optional downloadable PDF
   createdAt   DateTime @default(now())
 
-  patient     Patient @relation(fields: [patientId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
 }
 
 model Resource {
   id        String   @id @default(uuid())
   title     String
-  type      String   // FORM, CHECKLIST, GUIDELINE
+  type      String // FORM, CHECKLIST, GUIDELINE
   filePath  String?
   createdAt DateTime @default(now())
+}
+
+model Visit {
+  id        String @id @default(uuid())
+  patientId String
+  doctorId  String
+  notes     String
+
+  consultation ConsultationType
+  patient      Patient          @relation(fields: [patientId], references: [id])
+  doctor       Doctor           @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Medication {
+  id        String  @id @default(uuid())
+  patient   Patient @relation(fields: [patientId], references: [id])
+  patientId String
+  name      String
+  reminder  String // e.g., "08:00 AM, 08:00 PM"
+  notes     String?
 }
 
 // Auth

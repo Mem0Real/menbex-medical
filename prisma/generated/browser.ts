@@ -58,6 +58,16 @@ export type LabResult = Prisma.LabResultModel
  */
 export type Resource = Prisma.ResourceModel
 /**
+ * Model Visit
+ * 
+ */
+export type Visit = Prisma.VisitModel
+/**
+ * Model Medication
+ * 
+ */
+export type Medication = Prisma.MedicationModel
+/**
  * Model Account
  * 
  */

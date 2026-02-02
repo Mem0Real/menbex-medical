@@ -29,6 +29,9 @@ export type LabResultMinAggregateOutputType = {
   patientId: string | null
   filePath: string | null
   description: string | null
+  testName: string | null
+  result: string | null
+  fileUrl: string | null
   createdAt: Date | null
 }
 
@@ -37,6 +40,9 @@ export type LabResultMaxAggregateOutputType = {
   patientId: string | null
   filePath: string | null
   description: string | null
+  testName: string | null
+  result: string | null
+  fileUrl: string | null
   createdAt: Date | null
 }
 
@@ -45,6 +51,9 @@ export type LabResultCountAggregateOutputType = {
   patientId: number
   filePath: number
   description: number
+  testName: number
+  result: number
+  fileUrl: number
   createdAt: number
   _all: number
 }
@@ -55,6 +64,9 @@ export type LabResultMinAggregateInputType = {
   patientId?: true
   filePath?: true
   description?: true
+  testName?: true
+  result?: true
+  fileUrl?: true
   createdAt?: true
 }
 
@@ -63,6 +75,9 @@ export type LabResultMaxAggregateInputType = {
   patientId?: true
   filePath?: true
   description?: true
+  testName?: true
+  result?: true
+  fileUrl?: true
   createdAt?: true
 }
 
@@ -71,6 +86,9 @@ export type LabResultCountAggregateInputType = {
   patientId?: true
   filePath?: true
   description?: true
+  testName?: true
+  result?: true
+  fileUrl?: true
   createdAt?: true
   _all?: true
 }
@@ -152,6 +170,9 @@ export type LabResultGroupByOutputType = {
   patientId: string
   filePath: string
   description: string | null
+  testName: string
+  result: string
+  fileUrl: string | null
   createdAt: Date
   _count: LabResultCountAggregateOutputType | null
   _min: LabResultMinAggregateOutputType | null
@@ -181,6 +202,9 @@ export type LabResultWhereInput = {
   patientId?: Prisma.StringFilter<"LabResult"> | string
   filePath?: Prisma.StringFilter<"LabResult"> | string
   description?: Prisma.StringNullableFilter<"LabResult"> | string | null
+  testName?: Prisma.StringFilter<"LabResult"> | string
+  result?: Prisma.StringFilter<"LabResult"> | string
+  fileUrl?: Prisma.StringNullableFilter<"LabResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LabResult"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
 }
@@ -190,6 +214,9 @@ export type LabResultOrderByWithRelationInput = {
   patientId?: Prisma.SortOrder
   filePath?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  testName?: Prisma.SortOrder
+  result?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   patient?: Prisma.PatientOrderByWithRelationInput
 }
@@ -202,6 +229,9 @@ export type LabResultWhereUniqueInput = Prisma.AtLeast<{
   patientId?: Prisma.StringFilter<"LabResult"> | string
   filePath?: Prisma.StringFilter<"LabResult"> | string
   description?: Prisma.StringNullableFilter<"LabResult"> | string | null
+  testName?: Prisma.StringFilter<"LabResult"> | string
+  result?: Prisma.StringFilter<"LabResult"> | string
+  fileUrl?: Prisma.StringNullableFilter<"LabResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LabResult"> | Date | string
   patient?: Prisma.XOR<Prisma.PatientScalarRelationFilter, Prisma.PatientWhereInput>
 }, "id">
@@ -211,6 +241,9 @@ export type LabResultOrderByWithAggregationInput = {
   patientId?: Prisma.SortOrder
   filePath?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  testName?: Prisma.SortOrder
+  result?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.LabResultCountOrderByAggregateInput
   _max?: Prisma.LabResultMaxOrderByAggregateInput
@@ -225,6 +258,9 @@ export type LabResultScalarWhereWithAggregatesInput = {
   patientId?: Prisma.StringWithAggregatesFilter<"LabResult"> | string
   filePath?: Prisma.StringWithAggregatesFilter<"LabResult"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"LabResult"> | string | null
+  testName?: Prisma.StringWithAggregatesFilter<"LabResult"> | string
+  result?: Prisma.StringWithAggregatesFilter<"LabResult"> | string
+  fileUrl?: Prisma.StringNullableWithAggregatesFilter<"LabResult"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LabResult"> | Date | string
 }
 
@@ -232,6 +268,9 @@ export type LabResultCreateInput = {
   id?: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
   patient: Prisma.PatientCreateNestedOneWithoutLabResultsInput
 }
@@ -241,6 +280,9 @@ export type LabResultUncheckedCreateInput = {
   patientId: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -248,6 +290,9 @@ export type LabResultUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   patient?: Prisma.PatientUpdateOneRequiredWithoutLabResultsNestedInput
 }
@@ -257,6 +302,9 @@ export type LabResultUncheckedUpdateInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -265,6 +313,9 @@ export type LabResultCreateManyInput = {
   patientId: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -272,6 +323,9 @@ export type LabResultUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -280,6 +334,9 @@ export type LabResultUncheckedUpdateManyInput = {
   patientId?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -298,6 +355,9 @@ export type LabResultCountOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   filePath?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  testName?: Prisma.SortOrder
+  result?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -306,6 +366,9 @@ export type LabResultMaxOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   filePath?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  testName?: Prisma.SortOrder
+  result?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -314,6 +377,9 @@ export type LabResultMinOrderByAggregateInput = {
   patientId?: Prisma.SortOrder
   filePath?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  testName?: Prisma.SortOrder
+  result?: Prisma.SortOrder
+  fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -363,6 +429,9 @@ export type LabResultCreateWithoutPatientInput = {
   id?: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -370,6 +439,9 @@ export type LabResultUncheckedCreateWithoutPatientInput = {
   id?: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -407,6 +479,9 @@ export type LabResultScalarWhereInput = {
   patientId?: Prisma.StringFilter<"LabResult"> | string
   filePath?: Prisma.StringFilter<"LabResult"> | string
   description?: Prisma.StringNullableFilter<"LabResult"> | string | null
+  testName?: Prisma.StringFilter<"LabResult"> | string
+  result?: Prisma.StringFilter<"LabResult"> | string
+  fileUrl?: Prisma.StringNullableFilter<"LabResult"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LabResult"> | Date | string
 }
 
@@ -414,6 +489,9 @@ export type LabResultCreateManyPatientInput = {
   id?: string
   filePath: string
   description?: string | null
+  testName: string
+  result: string
+  fileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -421,6 +499,9 @@ export type LabResultUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -428,6 +509,9 @@ export type LabResultUncheckedUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -435,6 +519,9 @@ export type LabResultUncheckedUpdateManyWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   filePath?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  testName?: Prisma.StringFieldUpdateOperationsInput | string
+  result?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -445,6 +532,9 @@ export type LabResultSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   patientId?: boolean
   filePath?: boolean
   description?: boolean
+  testName?: boolean
+  result?: boolean
+  fileUrl?: boolean
   createdAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["labResult"]>
@@ -454,6 +544,9 @@ export type LabResultSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   patientId?: boolean
   filePath?: boolean
   description?: boolean
+  testName?: boolean
+  result?: boolean
+  fileUrl?: boolean
   createdAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["labResult"]>
@@ -463,6 +556,9 @@ export type LabResultSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   patientId?: boolean
   filePath?: boolean
   description?: boolean
+  testName?: boolean
+  result?: boolean
+  fileUrl?: boolean
   createdAt?: boolean
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["labResult"]>
@@ -472,10 +568,13 @@ export type LabResultSelectScalar = {
   patientId?: boolean
   filePath?: boolean
   description?: boolean
+  testName?: boolean
+  result?: boolean
+  fileUrl?: boolean
   createdAt?: boolean
 }
 
-export type LabResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "filePath" | "description" | "createdAt", ExtArgs["result"]["labResult"]>
+export type LabResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "patientId" | "filePath" | "description" | "testName" | "result" | "fileUrl" | "createdAt", ExtArgs["result"]["labResult"]>
 export type LabResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   patient?: boolean | Prisma.PatientDefaultArgs<ExtArgs>
 }
@@ -496,6 +595,9 @@ export type $LabResultPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     patientId: string
     filePath: string
     description: string | null
+    testName: string
+    result: string
+    fileUrl: string | null
     createdAt: Date
   }, ExtArgs["result"]["labResult"]>
   composites: {}
@@ -925,6 +1027,9 @@ export interface LabResultFieldRefs {
   readonly patientId: Prisma.FieldRef<"LabResult", 'String'>
   readonly filePath: Prisma.FieldRef<"LabResult", 'String'>
   readonly description: Prisma.FieldRef<"LabResult", 'String'>
+  readonly testName: Prisma.FieldRef<"LabResult", 'String'>
+  readonly result: Prisma.FieldRef<"LabResult", 'String'>
+  readonly fileUrl: Prisma.FieldRef<"LabResult", 'String'>
   readonly createdAt: Prisma.FieldRef<"LabResult", 'DateTime'>
 }
     

@@ -29,7 +29,7 @@ export const authOptions = {
 
         const isValid = await bcrypt.compare(
           credentials.password,
-          user.passwordHash
+          user.passwordHash,
         );
 
         if (!isValid) return null;
@@ -43,14 +43,14 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    jwt({ token, user }: {token: any, user: any}) {
+    jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.role = user.role;
         token.id = user.id;
       }
       return token;
     },
-    session({ session, token }: {session: any, token: any}) {
+    session({ session, token }: { session: any; token: any }) {
       if (session.user) {
         session.user.id = token.id;
         session.user.role = token.role;

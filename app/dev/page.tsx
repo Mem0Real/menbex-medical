@@ -77,13 +77,24 @@ export default function DevPage() {
           <button
             onClick={() =>
               signIn("credentials", {
-                email: "admin@test.com", // test user
+                email: "admin@test.com",
                 password: "password123",
                 callbackUrl: "/dev",
               })
             }
           >
-            Login
+            AdminLogin
+          </button>
+          <button
+            onClick={() =>
+              signIn("credentials", {
+                email: "patient@patient.com",
+                password: "password123",
+                callbackUrl: "/dev",
+              })
+            }
+          >
+            PatientLogin
           </button>
         </>
       ) : (
@@ -97,47 +108,96 @@ export default function DevPage() {
 
       <hr />
 
-      <h2>Doctor Availability</h2>
-      <input
-        placeholder="Doctor ID"
-        value={doctorId}
-        onChange={(e) => setDoctorId(e.target.value)}
-      />
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-      />
-      <button onClick={fetchAvailability}>Fetch Availability</button>
+      <div className="flex w-full gap-3">
+        <div className="left-sec">
+          <h2>Doctor Availability</h2>
+          <input
+            placeholder="Doctor ID"
+            value={doctorId}
+            onChange={(e) => setDoctorId(e.target.value)}
+          />
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+          <button onClick={fetchAvailability}>Fetch Availability</button>
 
-      <hr />
+          <hr />
 
-      <h2>Book Appointment</h2>
-      <input
-        placeholder="Slot ISO time"
-        value={slot}
-        onChange={(e) => setSlot(e.target.value)}
-      />
-      <button onClick={bookAppointment}>Book</button>
+          <h2>Book Appointment</h2>
+          <input
+            placeholder="Slot ISO time"
+            value={slot}
+            onChange={(e) => setSlot(e.target.value)}
+          />
+          <button onClick={bookAppointment}>Book</button>
 
-      <hr />
-      <h2>Reschedule / Cancel</h2>
-      <input
-        placeholder="Appointment ID"
-        value={appointmentId}
-        onChange={(e) => setAppointmentId(e.target.value)}
-      />
-      <input
-        type="datetime-local"
-        placeholder="New time"
-        value={newTime}
-        onChange={(e) => setNewTime(e.target.value)}
-      />
-      <button onClick={() => rescheduleAppointment(appointmentId, newTime)}>
-        Reschedule
-      </button>
-      <button onClick={() => cancelAppointment(appointmentId)}>Cancel</button>
-      <hr />
+          <hr />
+          <h2>Reschedule / Cancel</h2>
+          <input
+            placeholder="Appointment ID"
+            value={appointmentId}
+            onChange={(e) => setAppointmentId(e.target.value)}
+          />
+          <input
+            type="datetime-local"
+            placeholder="New time"
+            value={newTime}
+            onChange={(e) => setNewTime(e.target.value)}
+          />
+          <button onClick={() => rescheduleAppointment(appointmentId, newTime)}>
+            Reschedule
+          </button>
+          <button onClick={() => cancelAppointment(appointmentId)}>
+            Cancel
+          </button>
+          <hr />
+        </div>
+
+        <div className="right-sec">
+          <h2>Patient Portal</h2>
+          <button
+            onClick={async () => {
+              const res = await fetch("/api/patients/visits");
+              const data = await res.json();
+              setLog(data);
+            }}
+          >
+            View Visits
+          </button>
+
+          <button
+            onClick={async () => {
+              const res = await fetch("/api/patients/prescriptions");
+              const data = await res.json();
+              setLog(data);
+            }}
+          >
+            View Prescriptions
+          </button>
+
+          <button
+            onClick={async () => {
+              const res = await fetch("/api/patients/lab");
+              const data = await res.json();
+              setLog(data);
+            }}
+          >
+            View Labs
+          </button>
+
+          <button
+            onClick={async () => {
+              const res = await fetch("/api/patients/medications");
+              const data = await res.json();
+              setLog(data);
+            }}
+          >
+            View Medications
+          </button>
+        </div>
+      </div>
 
       <h2>API Response</h2>
       <pre style={{ background: "#111", color: "#0f0", padding: 16 }}>

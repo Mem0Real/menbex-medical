@@ -2,6 +2,24 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { APPOINTMENT_DURATION } from "@/lib/appointmentRules";
 import { ConsultationType } from "@/prisma/generated/client";
+import { requireDoctor } from "@/lib/auth";
+
+// List logged doctor's appointments
+export async function GET() {
+  try {
+    const session = await requireDoctor();
+
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        id: session.user.id,
+      },
+    });
+
+    return NextResponse.json(appointments);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
 
 export async function POST(req: Request) {
   try {

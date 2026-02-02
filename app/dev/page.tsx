@@ -69,167 +69,308 @@ export default function DevPage() {
   }
 
   return (
-    <main style={{ padding: 24, fontFamily: "monospace" }}>
-      <h1>🧪 Backend Dev Test Page</h1>
-
-      {!session ? (
-        <>
-          <p>Not logged in</p>
-          <button
-            onClick={() =>
-              signIn("credentials", {
-                email: "admin@test.com",
-                password: "password123",
-                callbackUrl: "/dev",
-              })
-            }
-          >
-            AdminLogin
-          </button>
-          <button
-            onClick={() =>
-              signIn("credentials", {
-                email: "patient@patient.com",
-                password: "password123",
-                callbackUrl: "/dev",
-              })
-            }
-          >
-            PatientLogin
-          </button>
-        </>
-      ) : (
-        <>
-          <p>
-            Logged in as <b>{session.user.email}</b> ({session.user.role})
-          </p>
-          <button onClick={() => signOut()}>Logout</button>
-        </>
-      )}
-
-      <hr />
-
-      <div className="flex w-full gap-3">
-        <div className="left-sec">
-          <h2>Doctor Availability</h2>
-          <input
-            placeholder="Doctor ID"
-            value={doctorId}
-            onChange={(e) => setDoctorId(e.target.value)}
-          />
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          <button onClick={fetchAvailability}>Fetch Availability</button>
-
-          <hr />
-
-          <h2>Book Appointment</h2>
-          <input
-            placeholder="Slot ISO time"
-            value={slot}
-            onChange={(e) => setSlot(e.target.value)}
-          />
-          <button onClick={bookAppointment}>Book</button>
-
-          <hr />
-          <h2>Reschedule / Cancel</h2>
-          <input
-            placeholder="Appointment ID"
-            value={appointmentId}
-            onChange={(e) => setAppointmentId(e.target.value)}
-          />
-          <input
-            type="datetime-local"
-            placeholder="New time"
-            value={newTime}
-            onChange={(e) => setNewTime(e.target.value)}
-          />
-          <button onClick={() => rescheduleAppointment(appointmentId, newTime)}>
-            Reschedule
-          </button>
-          <button onClick={() => cancelAppointment(appointmentId)}>
-            Cancel
-          </button>
-          <hr />
+    <main
+      style={{ padding: 24, fontFamily: "monospace" }}
+      className="bg-neutral-800 min-h-screen flex flex-col gap-3 justify-start items-start"
+    >
+      <h1 className="text-4xl font-bold">Backend Dev Test Page</h1>
+      <div className="w-full flex flex-col gap-2 flex-wrap">
+        {/* Login/Logout */}
+        <div className="size-fit flex flex-col gap-3 border border-white rounded-xl p-4 items-start ">
+          {!session ? (
+            <>
+              <p className="text-sm italic text-neutral-500">Not logged in</p>
+              <div className="flex gap-3 items-center justify-around">
+                <button
+                  className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                  onClick={() =>
+                    signIn("credentials", {
+                      email: "admin@test.com",
+                      password: "password123",
+                      callbackUrl: "/dev",
+                    })
+                  }
+                >
+                  Admin-Login
+                </button>
+                <button
+                  className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                  onClick={() =>
+                    signIn("credentials", {
+                      email: "patient@patient.com",
+                      password: "password123",
+                      callbackUrl: "/dev",
+                    })
+                  }
+                >
+                  Patient-Login
+                </button>
+                <button
+                  className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                  onClick={() =>
+                    signIn("credentials", {
+                      email: "doctor@doctor.com",
+                      password: "password123",
+                      callbackUrl: "/dev",
+                    })
+                  }
+                >
+                  Doctor-Login
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p>
+                Logged in as <b>{session.user.email}</b> ({session.user.role})
+              </p>
+              <button
+                className="border border-red-400 rounded-lg px-2 py-1 cursor-pointer hover:bg-red-400/70 hover:text-neutral-800 transition duration-300 ease-in-out"
+                onClick={() => signOut()}
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
 
-        <div className="right-sec">
-          <h2>Patient Portal</h2>
-          <button
-            onClick={async () => {
-              const res = await fetch("/api/patients/visits");
-              const data = await res.json();
-              setLog(data);
-            }}
-          >
-            View Visits
-          </button>
+        {/* Appointment */}
+        <div className="w-1/2 flex gap-3">
+          <div className="border border-white rounded-lg px-3 py-1 w-full grid grid-cols-2 space-y-12 py-6 relative">
+            <div className="flex flex-col gap-4 items-start">
+              <h2 className="text-lg mt-4 underline underline-offset-4">
+                Doctor Availability
+              </h2>
+              <input
+                className="min-w-56 w-fit border-b border-neutral-400 px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                placeholder="Doctor ID"
+                value={doctorId}
+                onChange={(e) => setDoctorId(e.target.value)}
+              />
+              <input
+                className="min-w-56 w-fit border border-neutral-400 rounded px-2 py-4 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+              <button
+                className="border border-neutral-400 rounded px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                onClick={fetchAvailability}
+              >
+                Fetch Availability
+              </button>
+            </div>
 
-          <button
-            onClick={async () => {
-              const res = await fetch("/api/patients/prescriptions");
-              const data = await res.json();
-              setLog(data);
-            }}
-          >
-            View Prescriptions
-          </button>
+            <div className="flex flex-col gap-4 items-start">
+              <h2 className="text-lg mt-4 underline underline-offset-4">
+                Book Appointment
+              </h2>
+              <input
+                className="min-w-56 w-fit border-b border-neutral-400 px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                placeholder="Slot ISO time"
+                value={slot}
+                onChange={(e) => setSlot(e.target.value)}
+              />
+              <button
+                className="border border-neutral-400 rounded px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                onClick={bookAppointment}
+              >
+                Book
+              </button>
+            </div>
 
-          <button
-            onClick={async () => {
-              const res = await fetch("/api/patients/lab");
-              const data = await res.json();
-              setLog(data);
-            }}
-          >
-            View Labs
-          </button>
+            <div className="flex flex-col gap-4 items-start">
+              <h2 className="text-lg mt-4 underline underline-offset-4">
+                Reschedule / Cancel
+              </h2>
+              <input
+                className="min-w-56 w-fit border-b border-neutral-400 px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                placeholder="Appointment ID"
+                value={appointmentId}
+                onChange={(e) => setAppointmentId(e.target.value)}
+              />
+              <input
+                className="min-w-56 w-fit border border-neutral-400 rounded px-2 py-4 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                type="datetime-local"
+                placeholder="New time"
+                value={newTime}
+                onChange={(e) => setNewTime(e.target.value)}
+              />
+              <div className="flex gap-4">
+                <button
+                  className="border border-neutral-400 rounded px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+                  onClick={() => rescheduleAppointment(appointmentId, newTime)}
+                >
+                  Reschedule
+                </button>
+                <button
+                  className="border border-red-400 rounded-lg px-2 py-1 cursor-pointer hover:bg-red-400/70 hover:text-neutral-800 transition duration-300 ease-in-out"
+                  onClick={() => cancelAppointment(appointmentId)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* Pharmacy */}
+        <div className="w-1/2 border border-white rounded px-3 pb-12 pt-4 h-fit">
+          <h2 className="text-xl my-8 underline underline-offset-4">
+            Pharmacy / Medicines
+          </h2>
+          <input
+            className="min-w-56 w-fit border-b border-neutral-400 px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+            placeholder="Search medicine"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+
+          <div className="flex gap-4 mt-4">
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch(
+                  `/api/pharmacy/medicines?query=${search}`,
+                );
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              Search Medicines
+            </button>
+
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/pharmacy/medicines");
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              List All Medicines
+            </button>
+          </div>
+
+          <h2 className="text-xl my-8 underline underline-offset-4">
+            Admin Dashboard
+          </h2>
+          <div className="flex gap-2">
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/admin/stats");
+                setLog(await res.json());
+              }}
+            >
+              Admin Stats
+            </button>
+
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/admin/appointments");
+                setLog(await res.json());
+              }}
+            >
+              All Appointments
+            </button>
+
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/admin/patients");
+                setLog(await res.json());
+              }}
+            >
+              All Patients
+            </button>
+
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/admin/medicines");
+                setLog(await res.json());
+              }}
+            >
+              All Medicines
+            </button>
+          </div>
+        </div>
+
+        {/* Patient */}
+        <div className="w-1/2 border border-white rounded px-3 pb-12 pt-4 h-fit">
+          <h2 className="text-xl my-8 underline underline-offset-4">
+            Patient Portal
+          </h2>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              className="min-w-56 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/patients/visits");
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              View Visits
+            </button>
+
+            <button
+              className="min-w-56 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/patients/prescriptions");
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              View Prescriptions
+            </button>
+
+            <button
+              className="min-w-56 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/patients/lab");
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              View Labs
+            </button>
+
+            <button
+              className="min-w-56 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
+                const res = await fetch("/api/patients/medications");
+                const data = await res.json();
+                setLog(data);
+              }}
+            >
+              View Medications
+            </button>
+          </div>
+        </div>
+
+        {/* Doctor */}
+        <div className="w-1/2 border border-white rounded px-3 pb-12 pt-4 h-fit">
           <button
+            className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
             onClick={async () => {
-              const res = await fetch("/api/patients/medications");
-              const data = await res.json();
-              setLog(data);
+              const res = await fetch("/api/appointments");
+              setLog(await res.json());
             }}
           >
-            View Medications
+            Show my appointments[Doc pov]
           </button>
+        </div>
+
+        <div className="flex flex-col w-full">
+          <h2>API Response</h2>
+          <pre style={{ background: "#111", color: "#0f0", padding: 16 }}>
+            {JSON.stringify(log, null, 2)}
+          </pre>
         </div>
       </div>
-
-      <h2>Pharmacy / Medicines</h2>
-      <input
-        placeholder="Search medicine"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button
-        onClick={async () => {
-          const res = await fetch(`/api/pharmacy/medicines?query=${search}`);
-          const data = await res.json();
-          setLog(data);
-        }}
-      >
-        Search Medicines
-      </button>
-
-      <button
-        onClick={async () => {
-          const res = await fetch("/api/pharmacy/medicines");
-          const data = await res.json();
-          setLog(data);
-        }}
-      >
-        List All Medicines
-      </button>
-
-      <h2>API Response</h2>
-      <pre style={{ background: "#111", color: "#0f0", padding: 16 }}>
-        {JSON.stringify(log, null, 2)}
-      </pre>
     </main>
   );
 }

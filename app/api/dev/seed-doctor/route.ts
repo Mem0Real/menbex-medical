@@ -1,23 +1,27 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { hash } from "bcrypt";
 
 export async function POST() {
+  const hashed = await hash("password123", 10);
+
   const doctor = await prisma.doctor.create({
     data: {
-      fullName: "Dr Test",
+      fullName: "Doctor",
       specialty: "General",
-      licenseNo: "TEST-123",
+      licenseNo: "DOC-123",
       availability: {
         timezone: "UTC",
         weekly: {
           monday: [{ start: "09:00", end: "17:00" }],
           tuesday: [{ start: "09:00", end: "17:00" }],
+          thursday: [{ start: "09:00", end: "17:00" }],
         },
       },
       user: {
         create: {
-          email: "doctor@test.com",
-          passwordHash: "TEMP",
+          email: "doctor@doctor.com",
+          passwordHash: hashed,
           role: "DOCTOR",
         },
       },

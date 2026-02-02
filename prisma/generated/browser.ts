@@ -68,6 +68,11 @@ export type Visit = Prisma.VisitModel
  */
 export type Medication = Prisma.MedicationModel
 /**
+ * Model Medicine
+ * 
+ */
+export type Medicine = Prisma.MedicineModel
+/**
  * Model Account
  * 
  */

@@ -61,6 +61,7 @@ export const ModelName = {
   Resource: 'Resource',
   Visit: 'Visit',
   Medication: 'Medication',
+  Medicine: 'Medicine',
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken'
@@ -205,6 +206,19 @@ export const MedicationScalarFieldEnum = {
 } as const
 
 export type MedicationScalarFieldEnum = (typeof MedicationScalarFieldEnum)[keyof typeof MedicationScalarFieldEnum]
+
+
+export const MedicineScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  stock: 'stock',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MedicineScalarFieldEnum = (typeof MedicineScalarFieldEnum)[keyof typeof MedicineScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {

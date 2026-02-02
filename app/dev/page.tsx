@@ -12,6 +12,7 @@ export default function DevPage() {
   const [slot, setSlot] = useState("");
   const [appointmentId, setAppointmentId] = useState("");
   const [newTime, setNewTime] = useState("");
+  const [search, setSearch] = useState("");
 
   async function seedDoctor() {
     const res = await fetch("/api/dev/seed-doctor", {
@@ -198,6 +199,32 @@ export default function DevPage() {
           </button>
         </div>
       </div>
+
+      <h2>Pharmacy / Medicines</h2>
+      <input
+        placeholder="Search medicine"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button
+        onClick={async () => {
+          const res = await fetch(`/api/pharmacy/medicines?query=${search}`);
+          const data = await res.json();
+          setLog(data);
+        }}
+      >
+        Search Medicines
+      </button>
+
+      <button
+        onClick={async () => {
+          const res = await fetch("/api/pharmacy/medicines");
+          const data = await res.json();
+          setLog(data);
+        }}
+      >
+        List All Medicines
+      </button>
 
       <h2>API Response</h2>
       <pre style={{ background: "#111", color: "#0f0", padding: 16 }}>

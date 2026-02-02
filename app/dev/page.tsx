@@ -71,7 +71,7 @@ export default function DevPage() {
   return (
     <main
       style={{ padding: 24, fontFamily: "monospace" }}
-      className="bg-neutral-800 min-h-screen flex flex-col gap-3 justify-start items-start"
+      className="bg-neutral-800 min-h-screen flex flex-col gap-3 justify-start items-start text-neutral-200"
     >
       <h1 className="text-4xl font-bold">Backend Dev Test Page</h1>
       <div className="w-full flex flex-col gap-2 flex-wrap">

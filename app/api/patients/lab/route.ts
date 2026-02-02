@@ -6,7 +6,7 @@ import { AuthOptions } from "next-auth";
 
 export async function GET() {
   const session = await getServerSession(authOptions as AuthOptions);
-  if (!session)
+  if (!session || session.user.role !== "PATIENT")
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
   const patient = await prisma.patient.findUnique({

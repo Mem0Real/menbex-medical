@@ -14,14 +14,6 @@ export default function DevPage() {
   const [newTime, setNewTime] = useState("");
   const [search, setSearch] = useState("");
 
-  async function seedDoctor() {
-    const res = await fetch("/api/dev/seed-doctor", {
-      method: "POST",
-    });
-    const data = await res.json();
-    setLog(data);
-  }
-
   async function fetchAvailability() {
     const res = await fetch(
       `/api/appointments/availability?doctorId=${doctorId}&date=${date}`,
@@ -289,6 +281,16 @@ export default function DevPage() {
             <button
               className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
               onClick={async () => {
+                const res = await fetch("/api/admin/doctors");
+                setLog(await res.json());
+              }}
+            >
+              All Doctors
+            </button>
+
+            <button
+              className="min-w-36 w-fit border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+              onClick={async () => {
                 const res = await fetch("/api/admin/medicines");
                 setLog(await res.json());
               }}
@@ -353,6 +355,9 @@ export default function DevPage() {
 
         {/* Doctor */}
         <div className="w-1/2 border border-white rounded px-3 pb-12 pt-4 h-fit">
+          <h2 className="text-xl my-8 underline underline-offset-4">
+            Doctor Portal
+          </h2>
           <button
             className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
             onClick={async () => {
@@ -360,7 +365,23 @@ export default function DevPage() {
               setLog(await res.json());
             }}
           >
-            Show my appointments[Doc pov]
+            Show appointments
+          </button>
+          <button
+            className="border border-neutral-400 rounded-3xl px-2 py-1 cursor-pointer hover:bg-neutral-400 hover:text-neutral-800 transition duration-300 ease-in-out"
+            onClick={async () => {
+              const res = await fetch(
+                "/api/doctor/patients/a9b97998-8715-4e0b-bd81-e8d49f603155",
+                {
+                  method: "GET",
+                  // credentials: "include",
+                },
+              );
+
+              setLog(await res.json());
+            }}
+          >
+            Get one of my patient&apos;s data
           </button>
         </div>
 

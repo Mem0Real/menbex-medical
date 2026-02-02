@@ -1,15 +1,20 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AuthOptions, getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // Doctor can ONLY see assigned patients
 // HIPAA/GDPR compliant
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _: NextRequest,
+  context: { params: Promise<{ id: string }> },
+) {
   const session = await getServerSession(authOptions as AuthOptions);
   if (!session || session.user.role !== "DOCTOR") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
+
+  const { id } = await context.params;
 
   const doctor = await prisma.doctor.findUnique({
     where: { userId: session.user.id },
@@ -18,7 +23,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   const hasAccess = await prisma.appointment.findFirst({
     where: {
       doctorId: doctor!.id,
-      patientId: params.id,
+      patientId: id,
     },
   });
 
@@ -27,7 +32,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   }
 
   const patient = await prisma.patient.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       visits: true,
       prescriptions: true,

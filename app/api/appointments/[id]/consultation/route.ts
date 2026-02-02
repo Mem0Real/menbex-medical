@@ -1,19 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { AuthOptions, getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
-  req: Request,
-  { params }: { params: { id: string } },
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions as AuthOptions);
   if (!session) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 
+  const { id } = await context.params;
+
   const appointment = await prisma.appointment.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { doctor: true },
   });
 
